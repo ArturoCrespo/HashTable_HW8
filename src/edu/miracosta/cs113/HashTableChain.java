@@ -268,11 +268,20 @@ public class HashTableChain<K, V> implements Map<K, V> {
         return h.equals(this);
     }
 
-    @Override public int hashCode() {
-        int code = 0;
-        Set<Map.Entry<K, V>> entrySet = entrySet();
-        for (Map.Entry<K, V> nextItem : entrySet) {
-             code += nextItem.hashCode();
+    @Override
+    public int hashCode() {
+
+        int code = 0 ;
+
+        for (LinkedList<Entry<K, V>> entrySet : table) {
+
+            if (entrySet != null) {
+
+                for (Entry<K, V> nextItem : entrySet) {
+                    code += nextItem.key.hashCode() + nextItem.value.hashCode();
+                }
+            }
+
         }
         return code ;
     }
@@ -344,15 +353,6 @@ public class HashTableChain<K, V> implements Map<K, V> {
         @Override
         public String toString() {
             return key + "=" + value ;
-        }
-
-        @Override
-        public int hashCode() {
-            int prime = 31;
-            int result = 1;
-            result = prime * result + ((key == null) ? 0 : key.hashCode());
-            result = prime * result + ((value == null) ? 0 : value.hashCode());
-            return result;
         }
 
     } // end of Entry inner class
